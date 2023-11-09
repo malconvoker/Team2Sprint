@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +7,12 @@ public class CharacterMovement : MonoBehaviour
     private float horizontal;
     [SerializeField] private float speed = 8f;
     [SerializeField] private float jumpingPower = 16f;
+    [SerializeField] private float wallJumpPower = 4f;
     private bool isFacingRight = true;
     [Header("Mandatory fields")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform[] wallCheck = new Transform[2];
     [SerializeField] private LayerMask groundLayer;
 
    
@@ -21,7 +22,21 @@ public class CharacterMovement : MonoBehaviour
     {
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+        // Prevent player from moving into a wall and sticking to it
+        if (IsFacingWall() && !IsGrounded())
+        {
+            if (isFacingRight && horizontal > 0)
+            {
+                horizontal = 0;
+            }
+            if (!isFacingRight && horizontal < 0)
+            {
+                horizontal = 0;
+            }
+        }
+
+        // Jump
+        if (Input.GetButtonDown("Jump") && (IsGrounded() || IsFacingWall()) )
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
@@ -44,6 +59,11 @@ public class CharacterMovement : MonoBehaviour
     private bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
+
+    private bool IsFacingWall()
+    {
+        return Physics2D.OverlapArea(wallCheck[0].position, wallCheck[1].position, groundLayer);
     }
 
     private void Flip()
