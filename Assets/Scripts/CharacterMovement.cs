@@ -7,7 +7,7 @@ public class CharacterMovement : MonoBehaviour
     private float horizontal;
     [SerializeField] private float speed = 8f;
     [SerializeField] private float jumpingPower = 16f;
-    [SerializeField] private float wallJumpPower = 4f;
+    //[SerializeField] private float wallJumpPower = 4f; //Would need to change horizontal move code
     private bool isFacingRight = true;
     [Header("Mandatory fields")]
     [SerializeField] private Rigidbody2D rb;

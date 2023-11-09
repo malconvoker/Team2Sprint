@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public Camera cameraToShake;
-    [SerializeField] private CameraShake camerashakescript;
+    [SerializeField] private CameraShake cameraShakeScript;
     public GameObject player;
     public GameObject monster;
     private float distanceToMonster;
@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
         {
             newShakeAmount = 0;
         }
-        camerashakescript.shakeAmount = newShakeAmount;
+        cameraShakeScript.shakeAmount = newShakeAmount;
 
 
     }
