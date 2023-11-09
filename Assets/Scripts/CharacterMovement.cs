@@ -6,10 +6,10 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     private float horizontal;
-    private float speed = 8f;
-    private float jumpingPower = 16f;
-    private bool isFaceingRight = true;
-
+    [SerializeField] private float speed = 8f;
+    [SerializeField] private float jumpingPower = 16f;
+    private bool isFacingRight = true;
+    [Header("Mandatory fields")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
@@ -26,6 +26,7 @@ public class CharacterMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
 
+        // Reduce upwards velocity if letting go of jump key
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
@@ -39,6 +40,7 @@ public class CharacterMovement : MonoBehaviour
     {
         rb.velocity = new Vector2 (horizontal * speed, rb.velocity.y);
     }
+
     private bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
@@ -46,9 +48,10 @@ public class CharacterMovement : MonoBehaviour
 
     private void Flip()
     {
-        if (isFaceingRight && horizontal < 0f || !isFaceingRight && horizontal > 0f) 
+        // Use localScale negation to flip character visually
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f) 
         {
-            isFaceingRight = !isFaceingRight;
+            isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
             localScale.x *= -1f;
             transform.localScale = localScale;

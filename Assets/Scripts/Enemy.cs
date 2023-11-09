@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    float health;
     public static event Action<Enemy> OnEnemyKilled;
-    [SerializeField] float helath, maxHelath = 4f;
+    [SerializeField] float health, maxHealth = 4f;
 
     [SerializeField] float moveSpeed = 3f;
     Rigidbody2D rb;
@@ -20,7 +19,7 @@ public class Enemy : MonoBehaviour
     }
     private void Start()
     {
-        health = maxHelath;
+        health = maxHealth;
         target = GameObject.Find("Player").transform;
     }
 
@@ -36,13 +35,13 @@ public class Enemy : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if(target)
+        if (target)
         {
             rb.velocity = new Vector2(moveDirection.x, moveDirection.y) * moveSpeed;
         }
     }
 
-    public void TakeDamage(float damageAmaount)
+    public void TakeDamage(float damageAmount)
     {
         
     }
