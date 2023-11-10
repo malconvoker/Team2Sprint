@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class HideOnAwake : MonoBehaviour
 {
-    private SpriteRenderer sprite;
-
     private void Awake()
     {
-        sprite = GetComponent<SpriteRenderer>();
-        sprite.enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
     }
 }
